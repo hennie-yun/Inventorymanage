@@ -1,0 +1,4 @@
+#Tue Jan 16 19:29:54 KST 2024
+base.0=/Users/softlabsm/Documents/Flutter_SMSoftLabPC/build/app/intermediates/dex/debugAndroidTest/mergeDexDebugAndroidTest/classes.dex
+path.0=classes.dex
+renamed.0=classes.dex

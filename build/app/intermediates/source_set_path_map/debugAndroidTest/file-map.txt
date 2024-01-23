@@ -1,0 +1,7 @@
+kr.co.fluttersmsoftlabpc.test.app-androidTest-0 /Users/softlabsm/Documents/Flutter_SMSoftLabPC/android/app/src/androidTest/res
+kr.co.fluttersmsoftlabpc.test.app-androidTestDebug-1 /Users/softlabsm/Documents/Flutter_SMSoftLabPC/android/app/src/androidTestDebug/res
+kr.co.fluttersmsoftlabpc.test.app-androidTest-2 /Users/softlabsm/Documents/Flutter_SMSoftLabPC/build/app/generated/res/resValues/androidTest/debug
+kr.co.fluttersmsoftlabpc.test.app-androidTest-3 /Users/softlabsm/Documents/Flutter_SMSoftLabPC/build/app/generated/res/rs/androidTest/debug
+kr.co.fluttersmsoftlabpc.test.app-mergeDebugAndroidTestResources-4 /Users/softlabsm/Documents/Flutter_SMSoftLabPC/build/app/intermediates/incremental/debugAndroidTest/mergeDebugAndroidTestResources/merged.dir
+kr.co.fluttersmsoftlabpc.test.app-mergeDebugAndroidTestResources-5 /Users/softlabsm/Documents/Flutter_SMSoftLabPC/build/app/intermediates/incremental/debugAndroidTest/mergeDebugAndroidTestResources/stripped.dir
+kr.co.fluttersmsoftlabpc.test.app-merged_res-6 /Users/softlabsm/Documents/Flutter_SMSoftLabPC/build/app/intermediates/merged_res/debugAndroidTest
