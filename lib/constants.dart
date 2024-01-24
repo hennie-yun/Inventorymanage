@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icon_snackbar/flutter_icon_snackbar.dart';
 import 'package:intl/intl.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 bool adminLogin = true;
 
@@ -89,25 +88,24 @@ showSnackBar(GlobalKey<ScaffoldState> viewKey, String msg) {
   // final snackBar = new SnackBar(content: new Text(msg), duration: Duration(milliseconds: 1000),);
   // viewKey.currentState?.showSnackBar(snackBar);
 }
+//
+// showSnackBar2(String msg,
+//     {Color color = Colors.black12, Color textColor = Colors.black}) {
+//
+//
+//     Widget toast = Container(
+//       padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 15),
+//       decoration: BoxDecoration(
+//         borderRadius: BorderRadius.circular(30.0),
+//         color: color,
+//       ),
+//       child: Text(msg,
+//           style: TextStyle(fontSize: 17, color: textColor)),
+//     );
+//
+//     Fluttertoast.showToast(
+//       child: toast,
+//       gravity: ToastGravity.BOTTOM,
+//       toastDuration: Duration(seconds: 2),
+//     );
 
-showSnackBar2(String msg,
-    {Color color = Colors.black12, Color textColor = Colors.black}) {
-
-
-    Widget toast = Container(
-      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 15),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(30.0),
-        color: color,
-      ),
-      child: Text(msg,
-          style: TextStyle(fontSize: 17, color: textColor)),
-    );
-
-    Fluttertoast.showToast(
-      child: toast,
-      gravity: ToastGravity.BOTTOM,
-      toastDuration: Duration(seconds: 2),
-    );
-
-}

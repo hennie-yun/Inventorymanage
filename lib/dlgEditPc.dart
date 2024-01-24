@@ -17,15 +17,15 @@ class DlgEditPc extends StatefulWidget {
   final int? deviceType;
   final bool? deviceAdd;
 
-  DlgEditPc({
-    Key? key,
-    this.viewKey,
-    this.title,
-    this.pcEditItem,
-    this.pcItemCount,
-    this.deviceType,
-    this.deviceAdd
-  }): super(key: key);
+  DlgEditPc(
+      {Key? key,
+      this.viewKey,
+      this.title,
+      this.pcEditItem,
+      this.pcItemCount,
+      this.deviceType,
+      this.deviceAdd})
+      : super(key: key);
 
   @override
   State createState() => new DlgEditPcState();
@@ -36,7 +36,8 @@ class DlgEditPcState extends State<DlgEditPc> {
   double cellHeight1 = 45.0;
   double cellHeight2 = 80.0;
   int bigCount = 7;
-  TextStyle titleStyle = TextStyle(fontSize: 15, color: Colors.black, fontWeight: FontWeight.bold);
+  TextStyle titleStyle =
+      TextStyle(fontSize: 15, color: Colors.black, fontWeight: FontWeight.bold);
   String pcStatus = '양호';
 
   int ssdCount = 3;
@@ -46,7 +47,7 @@ class DlgEditPcState extends State<DlgEditPc> {
   Map<String, dynamic>? pcEditItemCopy2;
 
   @override
-  void initState(){
+  void initState() {
     print('initState() 호출됨');
     super.initState();
     pcEditItemCopy = widget.pcEditItem;
@@ -55,7 +56,8 @@ class DlgEditPcState extends State<DlgEditPc> {
     if (widget.pcEditItem!.isNotEmpty) {
       pcStatus = widget.pcEditItem?['status'];
     }
-    if (widget.deviceAdd!) { // 기기등록 일 때
+    if (widget.deviceAdd!) {
+      // 기기등록 일 때
       ssdCount = 3;
       hddCount = 3;
       if (widget.deviceType == 0) {
@@ -82,15 +84,15 @@ class DlgEditPcState extends State<DlgEditPc> {
         widget.title = "서버 등록";
         widget.pcEditItem?['no'] = "S-";
         widget.pcEditItem?['m_type'] = "서버";
-      }else if (widget.deviceType == 5) {
+      } else if (widget.deviceType == 5) {
         widget.title = "기타 기기 등록";
         widget.pcEditItem?['no'] = "NEW-";
         widget.pcEditItem?['m_type'] = "기타";
       }
 
       widget.pcItemCount = widget.pcItemCount! + 1;
-
-    } else { // 기기편집 일 때
+    } else {
+      // 기기편집 일 때
       widget.title = widget.title! + " 편집";
 
       if (widget.deviceType == 1) {
@@ -111,7 +113,6 @@ class DlgEditPcState extends State<DlgEditPc> {
         bigCount -= 1;
         ssdCount -= 1;
       }
-
       hddCount = 3;
       if (widget.pcEditItem?['hdd1'].toString() == "") {
         bigCount -= 1;
@@ -152,211 +153,293 @@ class DlgEditPcState extends State<DlgEditPc> {
     super.dispose();
   }
 
-
-
   @override
   Widget build(BuildContext context) {
-
     var deviceWidth = MediaQuery.of(context).size.width;
     var deviceheight = MediaQuery.of(context).size.height;
 
-
     return Dialog(
-      insetPadding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-      child: Container(
-          width: deviceWidth *0.9,
-        height: deviceheight* 0.7,
-        color: Colors.white,
-          child: Column(
-            children: [
-              Container(
-                width: deviceWidth *0.9,
+        insetPadding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+        child: Container(
+            width: deviceWidth * 0.9,
+            height: deviceheight * 0.7,
+            color: Colors.white,
+            child: Column(
+              children: [
+                Container(
+                  width: deviceWidth * 0.9,
                   height: 58,
-                    color: mBlue,
-                    // padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
-                    child:  Align(
-                      child : Text(widget.title!, textAlign : TextAlign.center, style: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold)),
-                    ),
-              ),
-              Expanded(child: SingleChildScrollView(
-                    physics: ClampingScrollPhysics(),
-                    child: Container(
-                      padding: EdgeInsets.fromLTRB(15, 20, 15, 5),
-                      // height: (cellHeight1*(widget.pcItemCount!-bigCount))+(cellHeight2*bigCount)+(0.5*(widget.pcItemCount!)*2)+16,
-                      child: Container(
-                          padding: EdgeInsets.all(0.5),
-                        child : Column(
-                          children: [
-                            EditView(context),
-                            Container(
-                              padding: EdgeInsets.only(top : 5),
-                              child :Align(
-                                  alignment : Alignment.centerRight,
-                                  child : Text( '*는 필수 입력 사항입니다',style: TextStyle(fontSize:15, color: Colors.red,  fontStyle: FontStyle.italic))
+                  color: mBlue,
+                  // padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
+                  child: Align(
+                    child: Text(widget.title!,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold)),
+                  ),
+                ),
+                Expanded(
+                    child: SingleChildScrollView(
+                        physics: ClampingScrollPhysics(),
+                        child: Container(
+                          padding: EdgeInsets.fromLTRB(15, 20, 15, 5),
+                          // height: (cellHeight1*(widget.pcItemCount!-bigCount))+(cellHeight2*bigCount)+(0.5*(widget.pcItemCount!)*2)+16,
+                          child: Container(
+                              padding: EdgeInsets.all(0.5),
+                              child: Column(
+                                children: [
+                                  EditView(context),
+                                  Container(
+                                    padding: EdgeInsets.only(top: 5),
+                                    child: Align(
+                                        alignment: Alignment.centerRight,
+                                        child: Text('*는 필수 입력 사항입니다',
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                color: Colors.red,
+                                                fontStyle: FontStyle.italic))),
+                                  ),
+                                ],
+                              )),
+                        ))),
+
+                //취소 및 등록 버튼
+                Container(
+                    padding: EdgeInsets.fromLTRB(15, 20, 15, 5),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: Container(
+                            height: 70,
+                            margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                            padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                            child: TextButton(
+                              style: TextButton.styleFrom(
+                                backgroundColor: mYellow,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(50.0),
+                                    side: BorderSide(color: mYellow)),
                               ),
+                              child: Text(
+                                '취소',
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white),
+                              ),
+                              onPressed: () {
+                                Navigator.pop(context, false);
+                                setState(() {
+                                  AllInfoState();
+                                });
+
+                              },
+
                             ),
-                          ],
-                        )
 
-                      ),
-                    )
-                )),
-
-              //취소 및 등록 버튼
-              Container(
-                  padding: EdgeInsets.fromLTRB(15, 20, 15, 5),
-                child: Row(
-                  children: [
-                    Expanded(
-                      flex: 1,
-                      child: Container(
-                        height: 70,
-                        margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                        padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                        child: TextButton(
-                          style: TextButton.styleFrom(
-                            backgroundColor: mYellow,
-                            shape: RoundedRectangleBorder(
-                                borderRadius:
-                                BorderRadius.circular(50.0),
-                                side: BorderSide(color: mYellow)),
                           ),
-                          child: Text(
-                            '취소',
-                            style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white),
-                          ),
-                          onPressed: () {
-                            Navigator.pop(context, false);
-                            setState(() {
 
-                              AllInfoState();
-                            });
-
-                          },
                         ),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Container(
-                        height: 70,
-                        margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                        padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                        child: TextButton(
-                          style: TextButton.styleFrom(
-                            backgroundColor: mBlue,
-                            shape: RoundedRectangleBorder(
-                                borderRadius:
-                                BorderRadius.circular(50.0),
-                                side: BorderSide(color: mBlue)),
-                          ),
-                          child: Text(
-                            '등록',
-                            style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white),
-                          ),
-                          onPressed: () {
-                            FocusScope.of(context).unfocus();
-                            if (widget.deviceAdd!) {
-                              if ((widget.pcEditItem?["no"] != null && widget.pcEditItem?["no"].toString() != "")
-                                  && (widget.pcEditItem?["m_type"] != null && widget.pcEditItem?["m_type"].toString() != "")
-                                  && (widget.pcEditItem?["m_model"] != null && widget.pcEditItem?["m_model"].toString() != "")
-                                  && (widget.pcEditItem?["m_user"] != null && widget.pcEditItem?["m_user"].toString() != "")) {
-                                postAddAsset(
-                                    widget.pcEditItem!["no"].toString().toUpperCase(),//필수
-                                    widget.pcEditItem!["m_type"],//필수
-                                    widget.pcEditItem!["m_model"],//필수
-                                    widget.pcEditItem!["m_os"] ?? "",
-                                    widget.pcEditItem!["m_user"],//필수
-                                    widget.pcEditItem!["purchase_date"] ?? "",
-                                    widget.pcEditItem!["m_place"] ?? "",
-                                    widget.pcEditItem!["etc"] ?? "").then((bool value) {
-                                  if(value) {
-                                    if (widget.deviceAdd!) {
-                                      print('[추가] postSetMachine : $value');
-                                    } else {
-                                      print('[편집] postSetMachine : $value');
-                                    }
-                                    IconSnackBar.show(context: context, label: "저장 완료", snackBarType: SnackBarType.save);
-                                    Navigator.pop(context, true);
+                        Expanded(
+                          flex: 1,
+                          child: Container(
+                            height: 70,
+                            margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                            padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                            child: TextButton(
+                              style: TextButton.styleFrom(
+                                backgroundColor: mBlue,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(50.0),
+                                    side: BorderSide(color: mBlue)),
+                              ),
+                              child: Text(
+                                '등록',
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white),
+                              ),
+                              onPressed: () {
+                                FocusScope.of(context).unfocus();
+                                if (widget.deviceAdd!) {
+                                  if ((widget.pcEditItem?["no"] != null &&
+                                          widget.pcEditItem?["no"].toString() !=
+                                              "") &&
+                                      (widget.pcEditItem?["m_type"] != null &&
+                                          widget.pcEditItem?["m_type"]
+                                                  .toString() !=
+                                              "") &&
+                                      (widget.pcEditItem?["m_model"] != null &&
+                                          widget.pcEditItem?["m_model"]
+                                                  .toString() !=
+                                              "") &&
+                                      (widget.pcEditItem?["m_user"] != null &&
+                                          widget.pcEditItem?["m_user"]
+                                                  .toString() !=
+                                              "")) {
+                                    postAddAsset(
+                                            widget.pcEditItem!["no"]
+                                                .toString()
+                                                .toUpperCase(),
+                                            //필수
+                                            widget.pcEditItem!["m_type"],
+                                            //필수
+                                            widget.pcEditItem!["m_model"],
+                                            //필수
+                                            widget.pcEditItem!["m_os"] ?? "",
+                                            widget.pcEditItem!["m_user"],
+                                            //필수
+                                            widget.pcEditItem![
+                                                    "purchase_date"] ??
+                                                "",
+                                            widget.pcEditItem!["m_place"] ?? "",
+                                            widget.pcEditItem!["etc"] ?? "")
+                                        .then((bool value) {
+                                      if (value) {
+                                        if (widget.deviceAdd!) {
+                                          print('[추가] postSetMachine : $value');
+                                        } else {
+                                          print('[편집] postSetMachine : $value');
+                                        }
+                                        IconSnackBar.show(
+                                            context: context,
+                                            label: "저장 완료",
+                                            snackBarType: SnackBarType.save);
+                                        Navigator.pop(context, true);
+                                      } else {
+                                        IconSnackBar.show(
+                                            context: context,
+                                            label: "저장 실패",
+                                            snackBarType: SnackBarType.fail);
+                                        Navigator.pop(context, false);
+                                      }
+                                    });
                                   } else {
-                                    IconSnackBar.show(context: context, label: "저장 실패", snackBarType: SnackBarType.fail);
-                                    Navigator.pop(context, false);
+                                    if (widget.pcEditItem?["no"] != null &&
+                                        widget.pcEditItem?["no"].toString() !=
+                                            "") {
+                                      IconSnackBar.show(
+                                          context: context,
+                                          label: "기기번호는 필수 입력사항 입니다.",
+                                          snackBarType: SnackBarType.alert);
+                                    } else if (widget.pcEditItem?["m_type"] !=
+                                            null &&
+                                        widget.pcEditItem?["m_type"]
+                                                .toString() !=
+                                            "") {
+                                      IconSnackBar.show(
+                                          context: context,
+                                          label: "종류는 필수 입력사항 입니다.",
+                                          snackBarType: SnackBarType.alert);
+                                    } else if (widget.pcEditItem?["m_model"] !=
+                                            null &&
+                                        widget.pcEditItem?["m_model"]
+                                                .toString() !=
+                                            "") {
+                                      IconSnackBar.show(
+                                          context: context,
+                                          label: "사양은 필수 입력사항 입니다.",
+                                          snackBarType: SnackBarType.alert);
+                                    } else if (widget.pcEditItem?["m_user"] !=
+                                            null &&
+                                        widget.pcEditItem?["m_user"]
+                                                .toString() !=
+                                            "") {
+                                      IconSnackBar.show(
+                                          context: context,
+                                          label: "사용자명은 필수 입력사항 입니다.",
+                                          snackBarType: SnackBarType.alert);
+                                    } else {
+                                      IconSnackBar.show(
+                                          context: context,
+                                          label: "저장 실패",
+                                          snackBarType: SnackBarType.fail);
+                                    }
+                                    // Navigator.pop(context, false);
                                   }
-                                });
-                              } else {
-                                if(widget.pcEditItem?["no"] != null && widget.pcEditItem?["no"].toString() != ""){
-                                  IconSnackBar.show(context: context, label: "기기번호는 필수 입력사항 입니다.", snackBarType: SnackBarType.alert);
-                                } else if(widget.pcEditItem?["m_type"] != null && widget.pcEditItem?["m_type"].toString() != ""){
-                                  IconSnackBar.show(context: context, label: "종류는 필수 입력사항 입니다.", snackBarType: SnackBarType.alert);
-                                } else if(widget.pcEditItem?["m_model"] != null && widget.pcEditItem?["m_model"].toString() != ""){
-                                  IconSnackBar.show(context: context, label: "사양은 필수 입력사항 입니다.", snackBarType: SnackBarType.alert);
-                                } else if(widget.pcEditItem?["m_user"] != null && widget.pcEditItem?["m_user"].toString() != ""){
-                                  IconSnackBar.show(context: context, label: "사용자명은 필수 입력사항 입니다.", snackBarType: SnackBarType.alert);
                                 } else {
-                                  IconSnackBar.show(context: context, label: "저장 실패", snackBarType: SnackBarType.fail);
-                                }
-                                // Navigator.pop(context, false);
-                              }
-                            } else { // 편집
-                              if ((widget.pcEditItem?["no"] != null && widget.pcEditItem?["no"].toString() != "")
-                                  && (widget.pcEditItem?["m_type"] != null && widget.pcEditItem?["m_type"].toString() != "")
-                                  && (widget.pcEditItem?["m_model"] != null && widget.pcEditItem?["m_model"].toString() != "")
-                                  && (widget.pcEditItem?["m_os"] != null && widget.pcEditItem?["m_os"].toString() != "")
-                                  && (widget.pcEditItem?["m_user"] != null && widget.pcEditItem?["m_user"].toString() != "")
-                                  && (widget.pcEditItem?["purchase_date"] != null && widget.pcEditItem?["purchase_date"].toString() != "")
-                                  && (widget.pcEditItem?["m_place"] != null && widget.pcEditItem?["m_place"].toString() != "")
-                                  && (widget.pcEditItem?["etc"] != null && widget.pcEditItem?["etc"].toString() != "")
-                                  && (widget.pcEditItem?["status"] != null && widget.pcEditItem?["status"].toString() != "")) {
-                                postUpdateAsset(
-                                    widget.pcEditItem!["no"].toString().toUpperCase(),
-                                    widget.pcEditItem!["m_type"],
-                                    widget.pcEditItem!["m_model"],
-                                    widget.pcEditItem!["m_os"],
-                                    widget.pcEditItem!["m_user"],
-                                    widget.pcEditItem!["purchase_date"],
-                                    widget.pcEditItem!["m_place"],
-                                    widget.pcEditItem!["etc"],
-                                    widget.pcEditItem!["status"]).then((bool value) {
-                                  if(value) {
-                                    if (widget.deviceAdd!) {
-                                      print('[추가] postSetMachine : $value');
-                                    } else {
-                                      print('[편집] postSetMachine : $value');
-                                    }
-                                    IconSnackBar.show(context: context, label: "저장 완료", snackBarType: SnackBarType.save);
-                                    getAssetList(true);
-                                    Navigator.pop(context, true);
+                                  // 편집
+                                  if ((widget.pcEditItem?["no"] != null &&
+                                          widget.pcEditItem?["no"].toString() !=
+                                              "") &&
+                                      (widget.pcEditItem?["m_type"] != null &&
+                                          widget.pcEditItem?["m_type"].toString() !=
+                                              "") &&
+                                      (widget.pcEditItem?["m_model"] != null &&
+                                          widget.pcEditItem?["m_model"].toString() !=
+                                              "") &&
+                                      (widget.pcEditItem?["m_os"] != null &&
+                                          widget.pcEditItem?["m_os"].toString() !=
+                                              "") &&
+                                      (widget.pcEditItem?["m_user"] != null &&
+                                          widget.pcEditItem?["m_user"].toString() !=
+                                              "") &&
+                                      (widget.pcEditItem?["purchase_date"] != null &&
+                                          widget.pcEditItem?["purchase_date"]
+                                                  .toString() !=
+                                              "") &&
+                                      (widget.pcEditItem?["m_place"] != null &&
+                                          widget.pcEditItem?["m_place"].toString() !=
+                                              "") &&
+                                      (widget.pcEditItem?["etc"] != null &&
+                                          widget.pcEditItem?["etc"].toString() !=
+                                              "") &&
+                                      (widget.pcEditItem?["status"] != null &&
+                                          widget.pcEditItem?["status"].toString() != "")) {
+                                    postUpdateAsset(
+                                            widget.pcEditItem!["no"]
+                                                .toString()
+                                                .toUpperCase(),
+                                            widget.pcEditItem!["m_type"],
+                                            widget.pcEditItem!["m_model"],
+                                            widget.pcEditItem!["m_os"],
+                                            widget.pcEditItem!["m_user"],
+                                            widget.pcEditItem!["purchase_date"],
+                                            widget.pcEditItem!["m_place"],
+                                            widget.pcEditItem!["etc"],
+                                            widget.pcEditItem!["status"])
+                                        .then((bool value) {
+                                      if (value) {
+                                        if (widget.deviceAdd!) {
+                                          print('[추가] postSetMachine : $value');
+                                        } else {
+                                          print('[편집] postSetMachine : $value');
+                                        }
+                                        IconSnackBar.show(
+                                            context: context,
+                                            label: "저장 완료",
+                                            snackBarType: SnackBarType.save);
+                                        getAssetList(true);
+                                        Navigator.pop(context, true);
+                                      } else {
+                                        IconSnackBar.show(
+                                            context: context,
+                                            label: "저장 실패",
+                                            snackBarType: SnackBarType.fail);
+                                        Navigator.pop(context, false);
+                                      }
+                                    });
                                   } else {
-                                    IconSnackBar.show(context: context, label: "저장 실패", snackBarType: SnackBarType.fail);
-                                    Navigator.pop(context, false);
+                                    IconSnackBar.show(
+                                        context: context,
+                                        label: "모든 입력사항은 필수입니다.",
+                                        snackBarType: SnackBarType.alert);
+                                    // Navigator.pop(context, false);
                                   }
-                                });
-                              } else {
-                                IconSnackBar.show(context: context, label: "모든 입력사항은 필수입니다.", snackBarType: SnackBarType.alert);
-                                // Navigator.pop(context, false);
-                              }
-                            }
-                            // Navigator.pop(context, true);
-                          },
-                        ),
-                      ),
-                    )
-                  ],
-                )
-              )
-            ],
-          )
-      )
-    );
-
-
-
+                                }
+                                // Navigator.pop(context, true);
+                              },
+                            ),
+                          ),
+                        )
+                      ],
+                    ))
+              ],
+            )));
   }
 
   Column EditView(BuildContext context) {
@@ -494,7 +577,7 @@ class DlgEditPcState extends State<DlgEditPc> {
   Container _detailInfoEdit(String titleStr, String valueStr) {
     final textField = TextEditingController();
 
-    if(widget.pcEditItem?[valueStr].toString() != 'null') {
+    if (widget.pcEditItem?[valueStr].toString() != 'null') {
       textField.text = widget.pcEditItem![valueStr].toString();
     }
 
@@ -520,7 +603,7 @@ class DlgEditPcState extends State<DlgEditPc> {
       cellHeight = cellHeight2;
     }
 
-    if(valueStr == 'updatedate') {
+    if (valueStr == 'updatedate') {
       // 시스템 날짜 가져와서 설정해주기
       DateTime date = DateTime.now();
       String formattedDate = DateFormat('yyyyMMdd').format(date);
@@ -530,70 +613,81 @@ class DlgEditPcState extends State<DlgEditPc> {
 
     return Container(
       child: Container(
-          color: mDarkBlue,
-          child: Row(
-            children: [
-              Expanded(
-                flex: 3,
-                child: Container(
-                  height: cellHeight,
-                  margin: EdgeInsets.all(0.5),
-                  alignment: Alignment.center,
-                  color: mYellow,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(titleStr, style: titleStyle),
-                      if(widget.deviceAdd! && (titleStr == '기기번호' || titleStr == '종류' || titleStr == '사양' || titleStr == '사용자명'))
-                        Text('*', style: TextStyle(fontSize: 12, color: Colors.red)),
-                    ],
-                  ),
+        color: mDarkBlue,
+        child: Row(
+          children: [
+            Expanded(
+              flex: 3,
+              child: Container(
+                height: cellHeight,
+                margin: EdgeInsets.all(0.5),
+                alignment: Alignment.center,
+                color: mYellow,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(titleStr, style: titleStyle),
+                    if (widget.deviceAdd! &&
+                        (titleStr == '기기번호' ||
+                            titleStr == '종류' ||
+                            titleStr == '사양' ||
+                            titleStr == '사용자명'))
+                      Text('*',
+                          style: TextStyle(fontSize: 12, color: Colors.red)),
+                  ],
                 ),
               ),
-              Expanded(
-                flex: 7,
-                child: Container(
-                  height: cellHeight,
-                  margin: EdgeInsets.all(0.5),
-                  alignment: Alignment.center,
-                  color: Colors.white,
-                  child: titleStr == '종류' ? Container(
-                    padding: EdgeInsets.only(left:10),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        widget.pcEditItem?["m_type"] ?? '',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15,
-                          color: Colors.black,
+            ),
+            Expanded(
+              flex: 7,
+              child: Container(
+                height: cellHeight,
+                margin: EdgeInsets.all(0.5),
+                alignment: Alignment.center,
+                color: Colors.white,
+                child: titleStr == '종류'
+                    ? Container(
+                        padding: EdgeInsets.only(left: 10),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            widget.pcEditItem?["m_type"] ?? '',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                      )
+                    : Container(
+                        height: cellHeight,
+                        child: TextFormField(
+                          maxLines: 5,
+                          controller: textField,
+                          keyboardType: TextInputType.text,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15,
+                              color: Colors.black),
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.fromLTRB(
+                                10, cellHeight / 5, 10, cellHeight / 5),
+                            hintStyle: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
+                                color: Colors.black),
+                            border: InputBorder.none,
+                          ),
+                          onChanged: (data) {
+                            widget.pcEditItem?[valueStr] = data;
+                          },
                         ),
                       ),
-                    ) ,
-                  )
-
-                  : Container(
-                    height: cellHeight,
-                    child:
-                    TextFormField(
-                      maxLines: 5,
-                      controller: textField,
-                      keyboardType: TextInputType.text,
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: Colors.black),
-                      decoration: InputDecoration(
-                          contentPadding: EdgeInsets.fromLTRB(10, cellHeight/5, 10, cellHeight/5),
-                          hintStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: Colors.black),
-                          border: InputBorder.none,
-                      ),
-                      onChanged: (data) {
-                        widget.pcEditItem?[valueStr] = data;
-                      },
-                    ),
-                  ),
-                ),
-              )
-            ],
-          ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -638,36 +732,31 @@ class DlgEditPcState extends State<DlgEditPc> {
                               ),
                               Icon(Icons.arrow_drop_down)
                             ],
-                          )
-                      ),
+                          )),
                       onTap: () {
                         showDialog(
                             barrierDismissible: false,
                             context: context,
                             builder: (BuildContext context) {
                               return ShowStatusSelectDialog(context);
-                            }
-                        );
+                            });
                       },
-                    )
-                ),
+                    )),
               )
             ],
-          )
-      ),
+          )),
     );
   }
 
   /// 기기 상태 선택 다이얼로그
   Dialog ShowStatusSelectDialog(BuildContext context) {
-
     return Dialog(
       backgroundColor: Colors.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(7),
       ),
       child: Container(
-        width: MediaQuery.of(context).size.width*0.7,
+        width: MediaQuery.of(context).size.width * 0.7,
         height: 190,
         child: Column(
           children: <Widget>[
@@ -677,10 +766,20 @@ class DlgEditPcState extends State<DlgEditPc> {
               height: 40,
               child: Row(
                 children: <Widget>[
-                  Text('상태', style: TextStyle(fontSize: 15, color: Colors.white, fontWeight: FontWeight.w600),),
+                  Text(
+                    '상태',
+                    style: TextStyle(
+                        fontSize: 15,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600),
+                  ),
                   Spacer(),
                   IconButton(
-                    icon: Icon(Icons.clear, size: 25, color: Colors.white,),
+                    icon: Icon(
+                      Icons.clear,
+                      size: 25,
+                      color: Colors.white,
+                    ),
                     onPressed: () {
                       Navigator.pop(context);
                     },
@@ -689,77 +788,77 @@ class DlgEditPcState extends State<DlgEditPc> {
               ),
             ),
             Expanded(
-                child: ListView(
-                    children: <Widget>[
-                      InkWell(
-                        child: Container(
-                          height: 50,
-                          padding: EdgeInsets.all(10),
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                              border: Border(
-                                  bottom: BorderSide(
-                                    color: lineGray,
-                                    width: 1,
-                                  )
-                              )
-                          ),
-                          child: Text('양호', style: TextStyle(fontSize: 15, color: Colors.black),),
-                        ),
-                        onTap: () {
-                          Navigator.pop(context);
-                          setState(() {
-                            pcStatus = '양호';
-                          });
-                        },
-                      ),
-                      InkWell(
-                        child: Container(
-                          height: 50,
-                          padding: EdgeInsets.all(10),
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                              border: Border(
-                                  bottom: BorderSide(
-                                    color: lineGray,
-                                    width: 1,
-                                  )
-                              )
-                          ),
-                          child: Text('고장', style: TextStyle(fontSize: 15, color: Colors.black),),
-                        ),
-                        onTap: () {
-                          Navigator.pop(context);
-                          setState(() {
-                            pcStatus = '고장';
-                          });
-                        },
-                      ),
-                      InkWell(
-                        child: Container(
-                          height: 50,
-                          padding: EdgeInsets.all(10),
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                              border: Border(
-                                  bottom: BorderSide(
-                                    color: lineGray,
-                                    width: 1,
-                                  )
-                              )
-                          ),
-                          child: Text('폐기', style: TextStyle(fontSize: 15, color: Colors.black),),
-                        ),
-                        onTap: () {
-                          Navigator.pop(context);
-                          setState(() {
-                            pcStatus = '폐기';
-                          });
-                        },
-                      ),
-                    ]
-                )
-            )
+                child: ListView(children: <Widget>[
+              InkWell(
+                child: Container(
+                  height: 50,
+                  padding: EdgeInsets.all(10),
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                      border: Border(
+                          bottom: BorderSide(
+                    color: lineGray,
+                    width: 1,
+                  ))),
+                  child: Text(
+                    '양호',
+                    style: TextStyle(fontSize: 15, color: Colors.black),
+                  ),
+                ),
+                onTap: () {
+                  Navigator.pop(context);
+                  setState(() {
+                    pcStatus = '양호';
+                  });
+                },
+              ),
+              InkWell(
+                child: Container(
+                  height: 50,
+                  padding: EdgeInsets.all(10),
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                      border: Border(
+                          bottom: BorderSide(
+                    color: lineGray,
+                    width: 1,
+                  ))),
+                  child: Text(
+                    '고장',
+                    style: TextStyle(fontSize: 15, color: Colors.black),
+                  ),
+                ),
+                onTap: () {
+                  Navigator.pop(context);
+                  setState(() {
+                    pcStatus = '고장';
+                  });
+                },
+              ),
+              InkWell(
+                child: Container(
+                  height: 50,
+                  padding: EdgeInsets.all(10),
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                      border: Border(
+                          bottom: BorderSide(
+                    color: lineGray,
+                    width: 1,
+                  ))),
+                  child: Text(
+                    '폐기',
+                    style: TextStyle(fontSize: 15, color: Colors.black),
+                  ),
+                ),
+                onTap: () {
+                  Navigator.pop(context);
+                  setState(() {
+                    pcStatus = '폐기';
+                  });
+                },
+              ),
+            ]))
           ],
         ),
       ),
