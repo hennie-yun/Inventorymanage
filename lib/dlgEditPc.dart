@@ -1,10 +1,9 @@
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttersmsoftlabpc/allInfo.dart';
 import 'constants.dart';
 
 import 'Comm/commApi.dart';
 import 'package:intl/intl.dart';
-import 'package:flutter_icon_snackbar/flutter_icon_snackbar.dart';
 
 /// //////////////////////////////
 /// 기기편집 다이얼로그 클래스 ///
@@ -86,7 +85,7 @@ class DlgEditPcState extends State<DlgEditPc> {
         widget.pcEditItem?['m_type'] = "서버";
       } else if (widget.deviceType == 5) {
         widget.title = "기타 기기 등록";
-        widget.pcEditItem?['no'] = "NEW-";
+        widget.pcEditItem?['no'] = "E-";
         widget.pcEditItem?['m_type'] = "기타";
       }
 
@@ -232,16 +231,12 @@ class DlgEditPcState extends State<DlgEditPc> {
                               ),
                               onPressed: () {
                                 Navigator.pop(context, false);
-                                setState(() {
-                                  AllInfoState();
-                                });
-
+                                // setState(() {
+                                //   AllInfoState();
+                                // });
                               },
-
                             ),
-
                           ),
-
                         ),
                         Expanded(
                           flex: 1,
@@ -265,104 +260,88 @@ class DlgEditPcState extends State<DlgEditPc> {
                               ),
                               onPressed: () {
                                 FocusScope.of(context).unfocus();
+
+                                //등록이라면?
                                 if (widget.deviceAdd!) {
-                                  if ((widget.pcEditItem?["no"] != null &&
-                                          widget.pcEditItem?["no"].toString() !=
-                                              "") &&
-                                      (widget.pcEditItem?["m_type"] != null &&
-                                          widget.pcEditItem?["m_type"]
-                                                  .toString() !=
-                                              "") &&
-                                      (widget.pcEditItem?["m_model"] != null &&
-                                          widget.pcEditItem?["m_model"]
-                                                  .toString() !=
-                                              "") &&
-                                      (widget.pcEditItem?["m_user"] != null &&
-                                          widget.pcEditItem?["m_user"]
-                                                  .toString() !=
-                                              "")) {
+                                  String? pcEditItemNo = widget.pcEditItem?["no"];
+                                  RegExp regex = RegExp(r'^..(.+)$');
+                                  Match? match = regex.firstMatch(pcEditItemNo.toString() ?? '');
+                                  print(match);
+
+
+                                  // 필수 입력 필드 확인
+                                  bool isFieldsValid =
+                                  (match != null && match.group(1)?.isNotEmpty == true) &&
+                                          (widget.pcEditItem?["m_model"] != null &&
+                                              widget.pcEditItem?["m_model"].toString() != "") &&
+                                          (widget.pcEditItem?["m_user"] != null &&
+                                              widget.pcEditItem?["m_user"].toString() != "");
+
+
+                                  //등록을 누르고 필드 확인
+                                  if (isFieldsValid) {
                                     postAddAsset(
-                                            widget.pcEditItem!["no"]
-                                                .toString()
-                                                .toUpperCase(),
-                                            //필수
-                                            widget.pcEditItem!["m_type"],
-                                            //필수
-                                            widget.pcEditItem!["m_model"],
-                                            //필수
-                                            widget.pcEditItem!["m_os"] ?? "",
-                                            widget.pcEditItem!["m_user"],
-                                            //필수
-                                            widget.pcEditItem![
-                                                    "purchase_date"] ??
-                                                "",
-                                            widget.pcEditItem!["m_place"] ?? "",
-                                            widget.pcEditItem!["etc"] ?? "")
-                                        .then((bool value) {
+                                      widget.pcEditItem!["no"].toString().toUpperCase(),
+                                      widget.pcEditItem!["m_type"],
+                                      widget.pcEditItem!["m_model"],
+                                      widget.pcEditItem!["m_os"] ?? "",
+                                      widget.pcEditItem!["m_user"],
+                                      widget.pcEditItem!["purchase_date"] ?? "",
+                                      widget.pcEditItem!["m_place"] ?? "",
+                                      widget.pcEditItem!["etc"] ?? "",
+                                    ).then((bool value) {
                                       if (value) {
-                                        if (widget.deviceAdd!) {
-                                          print('[추가] postSetMachine : $value');
-                                        } else {
-                                          print('[편집] postSetMachine : $value');
-                                        }
-                                        IconSnackBar.show(
-                                            context: context,
-                                            label: "저장 완료",
-                                            snackBarType: SnackBarType.save);
+                                        print('[추가] postSetMachine : $value');
+                                        AnimatedSnackBar.material(
+                                          '저장 되었습니다.',
+                                          type: AnimatedSnackBarType.success,
+                                        ).show(context);
                                         Navigator.pop(context, true);
                                       } else {
-                                        IconSnackBar.show(
-                                            context: context,
-                                            label: "저장 실패",
-                                            snackBarType: SnackBarType.fail);
+                                        print('[편집] postSetMachine : $value');
+                                        AnimatedSnackBar.material(
+                                          '저장에 실패 하였습니다',
+                                          type: AnimatedSnackBarType.error,
+                                        ).show(context);
+
                                         Navigator.pop(context, false);
                                       }
                                     });
                                   } else {
-                                    if (widget.pcEditItem?["no"] != null &&
-                                        widget.pcEditItem?["no"].toString() !=
-                                            "") {
-                                      IconSnackBar.show(
-                                          context: context,
-                                          label: "기기번호는 필수 입력사항 입니다.",
-                                          snackBarType: SnackBarType.alert);
-                                    } else if (widget.pcEditItem?["m_type"] !=
-                                            null &&
-                                        widget.pcEditItem?["m_type"]
-                                                .toString() !=
-                                            "") {
-                                      IconSnackBar.show(
-                                          context: context,
-                                          label: "종류는 필수 입력사항 입니다.",
-                                          snackBarType: SnackBarType.alert);
-                                    } else if (widget.pcEditItem?["m_model"] !=
-                                            null &&
-                                        widget.pcEditItem?["m_model"]
-                                                .toString() !=
-                                            "") {
-                                      IconSnackBar.show(
-                                          context: context,
-                                          label: "사양은 필수 입력사항 입니다.",
-                                          snackBarType: SnackBarType.alert);
-                                    } else if (widget.pcEditItem?["m_user"] !=
-                                            null &&
-                                        widget.pcEditItem?["m_user"]
-                                                .toString() !=
-                                            "") {
-                                      IconSnackBar.show(
-                                          context: context,
-                                          label: "사용자명은 필수 입력사항 입니다.",
-                                          snackBarType: SnackBarType.alert);
+                                    if (match == null ||  match.group(1)?.isEmpty == true) {
+                                      print("기기번호");
+                                      showAnimatedSnackBar(
+                                        context,
+                                        '필수 입력 사항 미기재',
+                                        '기기번호는 필수 입력 사항입니다.',
+                                        'warning',
+                                      );
+                                    } else if (widget.pcEditItem?["m_model"] == null ||
+                                        widget.pcEditItem?["m_model"].toString() == "") {
+                                      print("사양");
+                                      showAnimatedSnackBar(
+                                        context,
+                                        '필수 입력 사항 미기재',
+                                        '사양은 필수 입력사항 입니다.',
+                                        'warning',
+                                      );
+                                    } else if (widget.pcEditItem?["m_user"] == null ||
+                                        widget.pcEditItem?["m_user"].toString() == "") {
+                                      print("사용자명");
+                                      showAnimatedSnackBar(
+                                        context,
+                                        '필수 입력 사항 미기재',
+                                        '사용자명은 필수 입력사항 입니다.',
+                                        'warning',
+                                      );
                                     } else {
-                                      IconSnackBar.show(
-                                          context: context,
-                                          label: "저장 실패",
-                                          snackBarType: SnackBarType.fail);
+                                      showAnimatedSnackBar(context, '저장 실패', '', 'error');
+                                      Navigator.pop(context, false);
                                     }
-                                    // Navigator.pop(context, false);
                                   }
-                                } else {
-                                  // 편집
+                                }
+                                // 편집
+                                else {
                                   if ((widget.pcEditItem?["no"] != null &&
                                           widget.pcEditItem?["no"].toString() !=
                                               "") &&
@@ -409,25 +388,25 @@ class DlgEditPcState extends State<DlgEditPc> {
                                         } else {
                                           print('[편집] postSetMachine : $value');
                                         }
-                                        IconSnackBar.show(
-                                            context: context,
-                                            label: "저장 완료",
-                                            snackBarType: SnackBarType.save);
+                                        AnimatedSnackBar.material(
+                                          '저장 되었습니다.',
+                                          type: AnimatedSnackBarType.success,
+                                        ).show(context);
                                         getAssetList(true);
                                         Navigator.pop(context, true);
                                       } else {
-                                        IconSnackBar.show(
-                                            context: context,
-                                            label: "저장 실패",
-                                            snackBarType: SnackBarType.fail);
+                                        AnimatedSnackBar.material(
+                                          '저장에 실패 하였습니다',
+                                          type: AnimatedSnackBarType.error,
+                                        ).show(context);
                                         Navigator.pop(context, false);
                                       }
                                     });
                                   } else {
-                                    IconSnackBar.show(
-                                        context: context,
-                                        label: "모든 입력사항은 필수입니다.",
-                                        snackBarType: SnackBarType.alert);
+                                    AnimatedSnackBar.material(
+                                      '모든 입력 사항은 필수 입니다',
+                                      type: AnimatedSnackBarType.warning,
+                                    ).show(context);
                                     // Navigator.pop(context, false);
                                   }
                                 }

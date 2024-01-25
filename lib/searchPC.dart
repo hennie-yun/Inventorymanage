@@ -218,17 +218,12 @@ class SearchPCState extends State<SearchPC> {
                                         color: Colors.white),
                                   ),
                                   onPressed: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => AllInfo()));
-                                    // showDialog(
-                                    //     barrierDismissible: false,
-                                    //     context: context,
-                                    //     builder: (BuildContext context) {
-                                    //       return ShowUserEditDialog(context);
-                                    //     }
-                                    // );
+                                    showDialog(
+                                        barrierDismissible: false,
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return ShowInquirySelectDialog(context);
+                                        });
                                   },
                                 ),
                               ),
@@ -328,313 +323,7 @@ class SearchPCState extends State<SearchPC> {
     }
   }
 
-  /// 기기등록 선택 다이얼로그
-  Container ShowEditSelectDialog(BuildContext context) {
-    return  Container(
-      color: Colors.white,
-      child :
-      Dialog(
-      backgroundColor: Colors.white,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(7),
-      ),
-      child: Container(
-        width: MediaQuery.of(context).size.width * 0.7,
-        height: 500,
-        child: Column(
-          children: <Widget>[
-            Container(
-              padding: EdgeInsets.fromLTRB(10, 2, 0, 2),
-              color: mBlue,
-              height: 50,
 
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Expanded(
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: Text(
-                        '기기 선택',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 15,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w800,
-                        ),
-                      ),
-                    ),
-                  ),
-                  IconButton(
-                    icon: Icon(
-                      Icons.clear,
-                      size: 25,
-                      color: Colors.white,
-                    ),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  )
-                ],
-              ),
-            ),
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                      child: Text('등록할 기기를 선택해 주세요',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.black45,
-                              fontWeight: FontWeight.w800))),
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        InkWell(
-                          child: Container(
-                            height: 90,
-                            width: 90,
-                            padding: EdgeInsets.all(10),
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              color: mYellow,
-                              borderRadius: BorderRadius.circular(20),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.7),
-                                  spreadRadius: 0,
-                                  blurRadius: 4.0,
-                                  offset: Offset(0, 5),
-                                ),
-                              ],
-                            ),
-                            child: Text(
-                              '본체',
-                              style:
-                                  TextStyle(fontSize: 16, color: Colors.white),
-                            ),
-                          ),
-                          onTap: () {
-                            Navigator.pop(context);
-
-                            deviceType = 0;
-                            moveEditDialog(context);
-                          },
-                        ),
-                        InkWell(
-                          child: Container(
-                            height: 90,
-                            width: 90,
-                            padding: EdgeInsets.all(10),
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              color: mYellow,
-                              borderRadius: BorderRadius.circular(20),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.7),
-                                  spreadRadius: 0,
-                                  blurRadius: 4.0,
-                                  offset: Offset(0, 5),
-                                ),
-                              ],
-                            ),
-                            child: Text(
-                              '노트북',
-                              style:
-                                  TextStyle(fontSize: 16, color: Colors.white),
-                            ),
-                          ),
-                          onTap: () {
-                            Navigator.pop(context);
-
-                            deviceType = 1;
-                            moveEditDialog(context);
-                          },
-                        ),
-                      ]),
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        InkWell(
-                          child: Container(
-                            height: 90,
-                            width: 90,
-                            padding: EdgeInsets.all(10),
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              color: mYellow,
-                              borderRadius: BorderRadius.circular(20),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.7),
-                                  spreadRadius: 0,
-                                  blurRadius: 4.0,
-                                  offset: Offset(0, 5),
-                                ),
-                              ],
-                            ),
-                            child: Text(
-                              '맥',
-                              style:
-                                  TextStyle(fontSize: 16, color: Colors.white),
-                            ),
-                          ),
-                          onTap: () {
-                            Navigator.pop(context);
-
-                            deviceType = 2;
-                            moveEditDialog(context);
-                          },
-                        ),
-                        InkWell(
-                          child: Container(
-                            height: 90,
-                            width: 90,
-                            padding: EdgeInsets.all(10),
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              color: mYellow,
-                              borderRadius: BorderRadius.circular(20),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.7),
-                                  spreadRadius: 0,
-                                  blurRadius: 4.0,
-                                  offset: Offset(0, 5),
-                                ),
-                              ],
-                            ),
-                            child: Text(
-                              '모니터',
-                              style:
-                                  TextStyle(fontSize: 16, color: Colors.white),
-                            ),
-                          ),
-                          onTap: () {
-                            Navigator.pop(context);
-
-                            deviceType = 3;
-                            moveEditDialog(context);
-                          },
-                        ),
-                      ]),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      InkWell(
-                        child: Container(
-                          height: 90,
-                          width: 90,
-                          padding: EdgeInsets.all(10),
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            color: mYellow,
-                            borderRadius: BorderRadius.circular(20),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.7),
-                                spreadRadius: 0,
-                                blurRadius: 4.0,
-                                offset: Offset(0, 5),
-                              ),
-                            ],
-                          ),
-                          child: Text(
-                            '서버',
-                            style: TextStyle(fontSize: 16, color: Colors.white),
-                          ),
-                        ),
-                        onTap: () {
-                          Navigator.pop(context);
-
-                          deviceType = 4;
-                          moveEditDialog(context);
-                        },
-                      ),
-                      InkWell(
-                        child: Container(
-                          height: 90,
-                          width: 90,
-                          padding: EdgeInsets.all(10),
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            color: mYellow,
-                            borderRadius: BorderRadius.circular(20),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.7),
-                                spreadRadius: 0,
-                                blurRadius: 4.0,
-                                offset: Offset(0, 5),
-                              ),
-                            ],
-                          ),
-                          child: Text(
-                            '기타',
-                            style: TextStyle(fontSize: 16, color: Colors.white),
-                          ),
-                        ),
-                        onTap: () {
-                          Navigator.pop(context);
-
-                          deviceType = 5;
-                          moveEditDialog(context);
-                        },
-                      ),
-                    ],
-                  )
-                ],
-              ),
-            )
-          ],
-        ),
-      ),
-    ));
-  }
-
-  /// 기기등록 다이얼로그 표시
-  void moveEditDialog(BuildContext context) {
-    switch (deviceType) {
-      case 0: // P
-        pcItemCount = 16;
-        break;
-      case 1: // N
-        pcItemCount = 17;
-        break;
-      case 2: // I
-        pcItemCount = 17;
-        break;
-      case 3: // M
-        pcItemCount = 7;
-        break;
-      case 4: // M
-        pcItemCount = 7;
-        break;
-    }
-
-    showDialog(
-        barrierDismissible: false,
-        context: context,
-        builder: (BuildContext context) {
-          return Dialog(
-            insetPadding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-            child: new DlgEditPc(
-                viewKey: viewKey,
-                pcEditItem: Map(),
-                pcItemCount: pcItemCount,
-                deviceType: deviceType,
-                deviceAdd: true),
-          );
-        });
-  }
 
   /// 사용자 등록 다이얼로그
   Dialog ShowUserEditDialog(BuildContext context) {
@@ -922,39 +611,313 @@ class SearchPCState extends State<SearchPC> {
     );
   }
 
-// 등록 리스트
-// void listMenu() {
-//   PopupMenu menu = PopupMenu(
-//       context: context,
-//       config: MenuConfig.forList(
-//         backgroundColor: mBlue,
-//           borderRadius: BorderRadius.all(Radius.circular(5.0))
-//
-//           // border: BorderConfig(width: 1, color: Colors.black)
-//       ),
-//       items: [
-//         // MenuItem.forList(
-//         //     title: 'Copy', image: Image.asset('assets/copy.png')),
-//         PopUpMenuItem.forList(
-//             title: 'Home',
-//             image:
-//             const Icon(Icons.home, color: Color(0xFF181818), size: 20)),
-//         PopUpMenuItem.forList(
-//             title: 'Mail',
-//             image:
-//             const Icon(Icons.mail, color: Color(0xFF181818), size: 20)),
-//         PopUpMenuItem.forList(
-//             title: 'Power',
-//             image:
-//             const Icon(Icons.power, color: Color(0xFF181818), size: 20)),
-//         PopUpMenuItem.forList(
-//             title: 'Setting',
-//             image: const Icon(Icons.settings,
-//                 color: Color(0xFF181818), size: 20)),
-//       ],
-//       onClickMenu: onClickMenu,
-//       onShow: onShow,
-//       onDismiss: onDismiss);
-//   menu.show(widgetKey: addKey);
-// }
+//조회 선택
+  Container ShowInquirySelectDialog(BuildContext context) {
+    return  Container(
+        color: Colors.white,
+        child :
+        Dialog(
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(7),
+          ),
+          child: Container(
+            width: MediaQuery.of(context).size.width * 0.8,
+            height: 550,
+            child: Column(
+              children: <Widget>[
+                Container(
+                  padding: EdgeInsets.fromLTRB(10, 2, 0, 2),
+                  color: mBlue,
+                  height: 50,
+
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Expanded(
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            '기기 리스트 보기',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 15,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w800,
+                            ),
+                          ),
+                        ),
+                      ),
+                      IconButton(
+                        icon: Icon(
+                          Icons.clear,
+                          size: 25,
+                          color: Colors.white,
+                        ),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                      )
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                          child: Text('조회 할 리스트를 선택 해 주세요 ',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.black45,
+                                  fontWeight: FontWeight.w800))),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            InkWell(
+                              child: Container(
+                                height: 90,
+                                width: 90,
+                                padding: EdgeInsets.all(10),
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                  color: mYellow,
+                                  borderRadius: BorderRadius.circular(20),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.7),
+                                      spreadRadius: 0,
+                                      blurRadius: 4.0,
+                                      offset: Offset(0, 5),
+                                    ),
+                                  ],
+                                ),
+                                child: Text(
+                                  '본체',
+                                  style:
+                                  TextStyle(fontSize: 16, color: Colors.white),
+                                ),
+                              ),
+                              onTap: () {
+                                Navigator.pop(context);
+
+                                deviceType = 0;
+
+                              },
+                            ),
+                            InkWell(
+                              child: Container(
+                                height: 90,
+                                width: 90,
+                                padding: EdgeInsets.all(10),
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                  color: mYellow,
+                                  borderRadius: BorderRadius.circular(20),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.7),
+                                      spreadRadius: 0,
+                                      blurRadius: 4.0,
+                                      offset: Offset(0, 5),
+                                    ),
+                                  ],
+                                ),
+                                child: Text(
+                                  '노트북',
+                                  style:
+                                  TextStyle(fontSize: 16, color: Colors.white),
+                                ),
+                              ),
+                              onTap: () {
+                                Navigator.pop(context);
+
+                                deviceType = 1;
+
+                              },
+                            ),
+
+
+
+
+                          ]),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            InkWell(
+                              child: Container(
+                                height: 90,
+                                width: 90,
+                                padding: EdgeInsets.all(10),
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                  color: mYellow,
+                                  borderRadius: BorderRadius.circular(20),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.7),
+                                      spreadRadius: 0,
+                                      blurRadius: 4.0,
+                                      offset: Offset(0, 5),
+                                    ),
+                                  ],
+                                ),
+                                child: Text(
+                                  '맥',
+                                  style:
+                                  TextStyle(fontSize: 16, color: Colors.white),
+                                ),
+                              ),
+                              onTap: () {
+                                Navigator.pop(context);
+
+                                deviceType = 2;
+
+                              },
+                            ),
+                            InkWell(
+                              child: Container(
+                                height: 90,
+                                width: 90,
+                                padding: EdgeInsets.all(10),
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                  color: mYellow,
+                                  borderRadius: BorderRadius.circular(20),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.7),
+                                      spreadRadius: 0,
+                                      blurRadius: 4.0,
+                                      offset: Offset(0, 5),
+                                    ),
+                                  ],
+                                ),
+                                child: Text(
+                                  '모니터',
+                                  style:
+                                  TextStyle(fontSize: 16, color: Colors.white),
+                                ),
+                              ),
+                              onTap: () {
+                                Navigator.pop(context);
+
+                                deviceType = 3;
+
+                              },
+                            ),
+                          ]),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          InkWell(
+                            child: Container(
+                              height: 90,
+                              width: 90,
+                              padding: EdgeInsets.all(10),
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                color: mYellow,
+                                borderRadius: BorderRadius.circular(20),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.7),
+                                    spreadRadius: 0,
+                                    blurRadius: 4.0,
+                                    offset: Offset(0, 5),
+                                  ),
+                                ],
+                              ),
+                              child: Text(
+                                '서버',
+                                style: TextStyle(fontSize: 16, color: Colors.white),
+                              ),
+                            ),
+                            onTap: () {
+                              Navigator.pop(context);
+
+                              deviceType = 4;
+
+                            },
+                          ),
+                          InkWell(
+                            child: Container(
+                              height: 90,
+                              width: 90,
+                              padding: EdgeInsets.all(10),
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                color: mYellow,
+                                borderRadius: BorderRadius.circular(20),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.7),
+                                    spreadRadius: 0,
+                                    blurRadius: 4.0,
+                                    offset: Offset(0, 5),
+                                  ),
+                                ],
+                              ),
+                              child: Text(
+                                '기타',
+                                style: TextStyle(fontSize: 16, color: Colors.white),
+                              ),
+                            ),
+                            onTap: () {
+                              Navigator.pop(context);
+
+                              deviceType = 5;
+
+                            },
+                          ),
+                        ],
+                      ),
+                          InkWell(
+                            child: Container(
+                              height: 90,
+                              width: 90,
+                              padding: EdgeInsets.all(10),
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                color: mYellow,
+                                borderRadius: BorderRadius.circular(20),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.7),
+                                    spreadRadius: 0,
+                                    blurRadius: 4.0,
+                                    offset: Offset(0, 5),
+                                  ),
+                                ],
+                              ),
+                              child: Text(
+                                '전체 조회',
+                                style: TextStyle(fontSize: 16, color: Colors.white),
+                              ),
+                            ),
+                            onTap: () {
+                              Navigator.pop(context);
+
+                              deviceType = 6;
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => AllInfo()));
+                            },
+                          ),
+
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+        ));
+  }
 }

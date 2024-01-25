@@ -12,6 +12,10 @@ class AllInfo extends StatefulWidget {
 
 class AllInfoState extends State<AllInfo> {
 
+  //필터
+  final List<String> list = <String>['본체', '노트북', '맥', '모니터', '서버', '기타'];
+String _selectedList = '';
+
   String locationValue = '전체';
   String statusValue = '전체';
   String deviceValue = '전체';
@@ -64,6 +68,10 @@ class AllInfoState extends State<AllInfo> {
   void initState() {
     super.initState();
 
+    setState(() {
+      _selectedList = list[0];
+    });
+
     _scController.addListener(() {
       _headerScController.jumpTo(_scController.offset);
       if(_scController.position.maxScrollExtent == _scController.offset) {
@@ -99,13 +107,13 @@ class AllInfoState extends State<AllInfo> {
           centerTitle: true,
           automaticallyImplyLeading: false,
           leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios, size: 20, color: mDarkBlue,),
+            icon: Icon(Icons.arrow_back_ios, size: 20, color: mDarkBlue),
             onPressed: () {
               Navigator.pop(context);
             },
           ),
           title: Container(
-            child: Text('전체 조회', style: TextStyle(fontSize: 17, color: mDarkBlue, fontWeight: FontWeight.bold),),
+            child: Text('전체 조회', style: TextStyle(fontSize: 17, color: mDarkBlue, fontWeight: FontWeight.bold)),
           ),
         ),
         body: FutureBuilder(
@@ -380,12 +388,41 @@ class AllInfoState extends State<AllInfo> {
           //     ],
           //   )
           // ),
-          Container(
-              height: 25,
-              padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-              alignment: Alignment.centerRight,
-              child: Text('수량 : $itemCount')
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                  height: 60,
+                  padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                  alignment: Alignment.centerRight,
+                  child: Text('수량 : $itemCount')
+              ),
+              Container(
+                  height: 60,
+                  padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                  alignment: Alignment.centerRight,
+                  child: DropdownButton(
+                    value: _selectedList,
+                    items: list.map((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                    onChanged: (String? value) {
+                      if (value != null) {
+                        setState(() {
+                          _selectedList = value;
+                        });
+                      }
+                    },
+
+
+                  )
+              ),
+            ],
           ),
+
           Expanded(
             child: Container(
               color: Colors.yellowAccent,
@@ -415,6 +452,8 @@ class AllInfoState extends State<AllInfo> {
     );
   }
 
+
+  //표의 세로줄
   Column _pcHistoryDetail() {
     return Column(
       children: <Widget>[
@@ -435,7 +474,7 @@ class AllInfoState extends State<AllInfo> {
                     decoration: BoxDecoration(
                         border: Border(
                             right: BorderSide(
-                              color: lineGray,
+                              color: Colors.red,
                               width: 1,
                             )
                         )
@@ -485,7 +524,7 @@ class AllInfoState extends State<AllInfo> {
       decoration: BoxDecoration(
           border: Border(
               bottom: BorderSide(
-                color: lineGray,
+                color: Colors.blue,
                 width: 1,
               )
           )
@@ -502,6 +541,7 @@ class AllInfoState extends State<AllInfo> {
     return List.generate(count, (index) => Container(
           alignment: Alignment.center,
           height: cellHeight,
+          color : Colors.yellow,
           child: InkWell(
             child: _detailCell(index),
             onTap: (){
@@ -524,6 +564,7 @@ class AllInfoState extends State<AllInfo> {
     );
   }
 
+  //데이터 셀 (움직일 수 있는 것)
   Container _detailCell(int index) {
     Map<String, dynamic>? item = totalData[index];
 
@@ -531,7 +572,7 @@ class AllInfoState extends State<AllInfo> {
         decoration: BoxDecoration(
             border: Border(
                 bottom: BorderSide(
-                  color: lineGray,
+                  color: Colors.green,
                   width: 1,
                 )
             )
@@ -649,6 +690,7 @@ class AllInfoState extends State<AllInfo> {
     );
   }
 
+  //헤더
   Stack _headerList() {
     return Stack(
       children: <Widget>[
@@ -860,183 +902,5 @@ class AllInfoState extends State<AllInfo> {
     return deviceSort(result);
   }
 
-  /// 기기등록 선택 다이얼로그
-  Dialog ShowEditSelectDialog(BuildContext context) {
-    return Dialog(
-      backgroundColor: Colors.white,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(7),
-      ),
-      child: Container(
-        width: MediaQuery.of(context).size.width*0.7,
-        height: 240,
-        child: Column(
-          children: <Widget>[
-            Container(
-              padding: EdgeInsets.fromLTRB(10, 2, 0, 2),
-              color: mBlue,
-              height: 40,
-              child: Row(
-                children: <Widget>[
-                  Text('기기 선택', style: TextStyle(fontSize: 15, color: Colors.white, fontWeight: FontWeight.w600),),
-                  Spacer(),
-                  IconButton(
-                    icon: Icon(Icons.clear, size: 25, color: Colors.white,),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  )
-                ],
-              ),
-            ),
-            Expanded(
-                child: ListView(
-                    children: <Widget>[
-                      InkWell(
-                        child: Container(
-                          height: 40,
-                          padding: EdgeInsets.all(10),
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                              border: Border(
-                                  bottom: BorderSide(
-                                    color: lineGray,
-                                    width: 1,
-                                  )
-                              )
-                          ),
-                          child: Text('본체', style: TextStyle(fontSize: 15, color: Colors.black),),
-                        ),
-                        onTap: () {
-                          Navigator.pop(context);
 
-                          deviceType = 0;
-                          moveEditDialog(context);
-                        },
-                      ),
-                      InkWell(
-                        child: Container(
-                          height: 40,
-                          padding: EdgeInsets.all(10),
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                              border: Border(
-                                  bottom: BorderSide(
-                                    color: lineGray,
-                                    width: 1,
-                                  )
-                              )
-                          ),
-                          child: Text('노트북', style: TextStyle(fontSize: 15, color: Colors.black),),
-                        ),
-                        onTap: () {
-                          Navigator.pop(context);
-
-                          deviceType = 1;
-                          moveEditDialog(context);
-                        },
-                      ),
-                      InkWell(
-                        child: Container(
-                          height: 40,
-                          padding: EdgeInsets.all(10),
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                              border: Border(
-                                  bottom: BorderSide(
-                                    color: lineGray,
-                                    width: 1,
-                                  )
-                              )
-                          ),
-                          child: Text('맥', style: TextStyle(fontSize: 15, color: Colors.black),),
-                        ),
-                        onTap: () {
-                          Navigator.pop(context);
-
-                          deviceType = 2;
-                          moveEditDialog(context);
-                        },
-                      ),
-                      InkWell(
-                        child: Container(
-                          height: 40,
-                          padding: EdgeInsets.all(10),
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                              border: Border(
-                                  bottom: BorderSide(
-                                    color: lineGray,
-                                    width: 1,
-                                  )
-                              )
-                          ),
-                          child: Text('모니터', style: TextStyle(fontSize: 15, color: Colors.black),),
-                        ),
-                        onTap: () {
-                          Navigator.pop(context);
-
-                          deviceType = 3;
-                          moveEditDialog(context);
-                        },
-                      ),
-                      InkWell(
-                        child: Container(
-                          height: 40,
-                          padding: EdgeInsets.all(10),
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                              border: Border(
-                                  bottom: BorderSide(
-                                    color: lineGray,
-                                    width: 1,
-                                  )
-                              )
-                          ),
-                          child: Text('서버', style: TextStyle(fontSize: 15, color: Colors.black),),
-                        ),
-                        onTap: () {
-                          Navigator.pop(context);
-
-                          deviceType = 4;
-                          moveEditDialog(context);
-                        },
-                      ),
-                    ]
-                )
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
-  /// 기기등록 다이얼로그 표시
-  void moveEditDialog(BuildContext context) {
-    switch(deviceType) {
-      case 0:   // P
-        pcItemCount = 16;
-        break;
-      case 1:   // N
-        pcItemCount = 17;
-        break;
-      case 2:   // I
-        pcItemCount = 17;
-        break;
-      case 3:   // M
-        pcItemCount = 7;
-        break;
-    }
-
-    showDialog(
-        barrierDismissible: false,
-        context: context,
-        builder: (BuildContext context) {
-          return Dialog(
-            insetPadding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-            child: new DlgEditPc(viewKey: viewKey, pcEditItem: Map(), pcItemCount: pcItemCount, deviceType: deviceType, deviceAdd: true),
-          );
-        }
-    );
-  }
 }
